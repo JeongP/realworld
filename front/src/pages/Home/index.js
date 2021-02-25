@@ -1,7 +1,7 @@
 import React from 'react';
-import Banner from './Banner';
-import MainView from './MainView';
-import Tags from './Tags';
+import Banner from './section/Banner';
+import MainView from './section/MainView';
+import Tags from './section/Tags';
 
 function Home() {
 	return (
