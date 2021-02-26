@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
 import ArticleList from '../components/ArticleList';
 
 const YourFeedTab = props => {
@@ -17,7 +19,23 @@ const GlobalFeedTab = props => {
   );
 }
 
+
 const MainView = () => {
+  const [articles, setArticles] = useState(null);
+
+  useEffect(() => {
+    const callApi = async () => {
+      const response = await axios.get(
+        'https://conduit.productionready.io/api/articles?limit=20'
+      );
+      setArticles(response.data.articles)
+    }
+    callApi();
+  },[]);
+
+  if(!articles) return null;
+  console.log(typeof(articles))
+  console.log(articles[0])
   return (
     <div class="col-md-9">
       <div class="feed-toggle">
@@ -26,7 +44,11 @@ const MainView = () => {
           <GlobalFeedTab />
         </ul>
       </div>
-      
+      {articles.map(article => (
+        <li>
+          {article.title}
+        </li>
+      ))}
       <ArticleList />
     </div>
   );
